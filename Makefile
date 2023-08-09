@@ -1,9 +1,9 @@
-GITHUB_BRANCH_DEFAULT := development
+GITHUB_BRANCH_DEFAULT := add-monitoring-db2
 GITHUB_BRANCH := $(if $(GITHUB_BRANCH_OVERRIDE),$(GITHUB_BRANCH_OVERRIDE),$(GITHUB_BRANCH_DEFAULT))
-GITHUB_REPO ?= github.com/v3io/helm-charts
+GITHUB_REPO ?= github.com/Eyal-Danieli//helm-charts
 
 HELM ?= helm
-HELM_REPO_DEFAULT := https://v3io.github.io/helm-charts
+HELM_REPO_DEFAULT := https://Eyal-Danieli.github.io/helm-charts
 HELM_REPO_ROOT := $(if $(HELM_REPO_OVERRIDE),$(HELM_REPO_OVERRIDE),$(HELM_REPO_DEFAULT))
 WORKDIR := stable
 HELM_PACKAGE_ARGS ?=
@@ -153,8 +153,12 @@ helm-publish-incubator-specific: cleanup-tmp-workspace
 helm-publish-stable-specific-v2: cleanup-tmp-workspace
 helm-publish-stable-specific-v2:
 	@echo "Preparing to release a new stable index for $(CHART_NAME) from $(GITHUB_BRANCH)"
+	@echo "EYAL: before clone dir"
+	@echo "EYAL: public repo $(PUBLISH_REPO)"
 	@git clone -b gh-pages --single-branch $(PUBLISH_REPO) /tmp/v3io-helm-charts
+	@echo "EYAL: before index dir"
 	@INDEX_DIR=/tmp/v3io-helm-charts HELM_PACKAGE_ARGS="-d /tmp/v3io-helm-charts/stable" make stable-specific
+	@echo "EYAL: after index dir"
 	@REF_SHA=$$(git rev-parse HEAD) && \
 		cd /tmp/v3io-helm-charts && \
 		git add --force stable/$(CHART_NAME)*tgz && \

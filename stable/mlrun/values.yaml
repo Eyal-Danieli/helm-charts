@@ -605,9 +605,9 @@ httpDB:
   # dsn: "mysql+pymysql://root@mlrun-db:3306/mlrun"
   # oldDsn: "sqlite:////mlrun/db/mlrun.db?check_same_thread=false"
 
-model_monitoring:
-  db:
-    enabled: false
+modelMonitoring:
+  enabled: true
+  dsn:
 
 defaultDockerRegistryURL: ""
 defaultDockerRegistrySecretName: ""

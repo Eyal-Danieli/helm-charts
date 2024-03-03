@@ -21,11 +21,11 @@ mlrun:
       - name: MLRUN_STORAGE__AUTO_MOUNT_TYPE
         value: s3
       - name: MLRUN_STORAGE__AUTO_MOUNT_PARAMS
-        value: "aws_access_key=minio,aws_secret_key=minio123,endpoint_url=http://minio.mlrun.svc.cluster.local:9000"
+        value: "aws_access_key=minio,aws_secret_key=minio123,endpoint_url=http://minio.{{.Release.Namespace}}.svc.cluster.local:9000"
       - name: MLRUN_HTTPDB__PROJECTS__FOLLOWERS
         value: nuclio
       - name: S3_ENDPOINT_URL
-        value: http://minio.mlrun.svc.cluster.local:9000
+        value: http://minio.{{ .Release.Namespace }}.svc.cluster.local:9000
       - name: AWS_SECRET_ACCESS_KEY
         value: minio123
       - name: AWS_ACCESS_KEY_ID
@@ -39,7 +39,7 @@ mlrun:
       - name: MLRUN_SPARK_APP_IMAGE_TAG
         value: v3.2.1-mlk
       - name: MLRUN_KFP_URL
-        value: http://ml-pipeline.mlrun.svc.cluster.local:8888
+        value: http://ml-pipeline.{{ .Release.Namespace }}.svc.cluster.local:8888
   db:
     persistence:
       enabled: true
@@ -88,7 +88,7 @@ pipelines:
     enabled: true
     accessKey: "minio"
     secretKey: "minio123"
-    endpoint: "minio.mlrun.svc.cluster.local"
+    endpoint: "minio.mlrun{{ .Release.Namespace }}.svc.cluster.local"
     endpointPort: "9000"
     bucket: "mlrun"
   images:
